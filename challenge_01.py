@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
 
+"""
+This program returns the sum of the result of max 4 numbers to the power of 2
+and for each result between 10,000 and 100,000.
+"""
+
+__author__ = "Jeroen van Gemert"
+__license__ = "GPL"
+__email__ = "github@jeroen.van.gemert.net"
+__status__ = "Production"
+
 def main():
     topper = [0,[]]
     ct = 0

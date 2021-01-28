@@ -1,14 +1,24 @@
 #!/usr/bin/env python3
 
-weight = 121
-nr_of_parts = 5
+"""
+This program returns the weight of a givven number of pieces that a weight
+breaks in to. The combiniation of the pieces makes it posible to weight every
+ posible weight from 1 to the original weight in steps of 1
+"""
 
-# weight = 40
-# nr_of_parts = 4
+__author__ = "Jeroen van Gemert"
+__license__ = "GPL"
+__email__ = "github@jeroen.van.gemert.net"
+__status__ = "Production"
 
-weight = 13
-nr_of_parts = 3
+weight = 40
+nr_of_parts = 4
 
+# weight = 13
+# nr_of_parts = 3
+
+# weight = 121
+# nr_of_parts = 5
 
 part=[0] * nr_of_parts
 

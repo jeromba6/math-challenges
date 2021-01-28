@@ -11,6 +11,8 @@ __license__ = "GPL"
 __email__ = "github@jeroen.van.gemert.net"
 __status__ = "Production"
 
+
+# Set variables
 weight = 40
 nr_of_parts = 4
 
@@ -20,8 +22,32 @@ nr_of_parts = 4
 # weight = 121
 # nr_of_parts = 5
 
-part=[0] * nr_of_parts
 
+def main():
+    parts = [0] * nr_of_parts
+    # Endless loop
+    while True:
+        # Call function for determine an option of combination of weights
+        parts, valid = set_parts(parts, 0, nr_of_parts, weight)
+
+        # Check or there might be a still a vallid solution posible
+        if not valid:
+            print(parts)
+            print ('No solution posible')
+            exit()
+
+        # Check or current solution is vallid
+        if test_solution(parts,weight):
+            print(parts,'    ')
+            test_solution(parts,weight,True)
+            exit()
+
+        # Output current solution which is not vallid
+        else:
+            print(parts,'   ', end='\r')
+
+
+# For each weight check or it can be made in a combination of the pieces
 def test_solution(p, weight,show_result=False):
     cv=[0] * nr_of_parts
     for check_weight in range(1,weight+1):
@@ -43,36 +69,29 @@ def test_solution(p, weight,show_result=False):
             return False
     return True
 
-def set_parts(part,position, nr_of_parts, weight):
-    if position == 0:
-        part[position] = 1
-        part, valid = set_parts(part,position+1,nr_of_parts,weight)
-        return part, valid
-    if position == nr_of_parts - 1:
-        part[position] = weight - sum(part)
-        if part[position -1] >= part[position]:
-            return part, False
-        return part, True
-    part[position]=max(part[position-1]+1,part[position])
-    part, valid = set_parts(part, position + 1, nr_of_parts, weight)
-    if not valid:
-        part[position]=max(part[position-1]+1,part[position]+1)
-        part=part[0:position+1] + [0] * (nr_of_parts - position - 1)
-        part, valid = set_parts(part, position + 1, nr_of_parts, weight)
-    return part, valid
 
-while True:
-    part, valid = set_parts(part, 0, nr_of_parts, weight)
+# Sugest next solution
+def set_parts(parts,position, nr_of_parts, weight):
+    if position == 0:
+        parts[position] = 1
+        parts, valid = set_parts(parts,position+1,nr_of_parts,weight)
+        return parts, valid
+    if position == nr_of_parts - 1:
+        parts[position] = weight - sum(parts)
+        if parts[position -1] >= parts[position]:
+            return parts, False
+        return parts, True
+    parts[position]=max(parts[position-1]+1,parts[position])
+    parts, valid = set_parts(parts, position + 1, nr_of_parts, weight)
     if not valid:
-        print(part)
-        print ('No solution posible')
-        exit()
-    if test_solution(part,weight):
-        print(part,'    ')
-        test_solution(part,weight,True)
-        exit()
-    else:
-        print(part,'   ', end='\r')
+        parts[position]=max(parts[position-1]+1,parts[position]+1)
+        parts=parts[0:position+1] + [0] * (nr_of_parts - position - 1)
+        parts, valid = set_parts(parts, position + 1, nr_of_parts, weight)
+    return parts, valid
+
+
+main()
+
 
 
 
